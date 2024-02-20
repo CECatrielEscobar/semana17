@@ -1,0 +1,241 @@
+body {
+  background-color: #777;
+}
+
+/* navbar */
+.navContainer {
+  background-color: #777;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+.contenedorGral {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.contForm {
+  height: 100vh;
+}
+.formContainer {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 20px;
+  font-weight: 600;
+}
+.contenedorText {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Estilos para la tarjeta */
+.contenedor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  z-index: -1;
+}
+.txtMensaje {
+  color: #1eb83f;
+  margin-bottom: 5px;
+}
+.contenedorCard {
+  width: 450px;
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  z-index: -20;
+}
+.btnClose {
+  position: absolute;
+  font-size: 30px;
+  top: 5px; /* Ajusta la posición del botón para que sobresalga */
+  right: 5px; /* Ajusta la posición del botón para que sobresalga */
+  z-index: 1; /* Ajusta el z-index para que esté sobre la tarjeta */
+  background-color: rgba(0, 0, 0, 0.623);
+  border: none;
+  color: red;
+  transition: 0.05s;
+}
+.btnClose:hover {
+  transform: scale(105%);
+}
+.card {
+  position: relative;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease-in-out;
+  text-align: center;
+}
+
+/* Estilos para el contenido de la tarjeta */
+.card-body {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin-bottom: 5px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/* CONTENEDOR PARA TODOS LOS PRUDCTOS */
+
+.contenedorAllProducts {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 15px;
+}
+.cardAllProducts {
+  position: relative;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease-in-out;
+  text-align: center;
+}
+
+.imgAProducts {
+  width: 100%;
+  height: 200px;
+}
+
+.containerDetail {
+  width: 100%;
+  margin-top: 20px;
+  background-color: rebeccapurple;
+  display: flex;
+  justify-content: center;
+}
+
+/* CHAT */
+
+.chat-window {
+  width: 400px;
+  margin: 50px auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.chat-messages {
+  height: 300px;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.chat-input button {
+  padding: 8px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para el mensaje enviado por el usuario */
+.message {
+  bottom: 1px;
+  position: relative;
+}
+.message.sent {
+  text-align: right;
+  background-color: #dcf8c6;
+  margin-left: auto;
+}
+.sent p {
+  margin-right: 10px;
+}
+.sent .hora {
+  position: absolute;
+  color: green;
+  left: 5px;
+  font-size: 0.8rem;
+}
+
+/* Estilos para el mensaje recibido */
+.message.received {
+  text-align: left;
+  background-color: #f0f0f0;
+  margin-right: auto;
+}
+
+.received .hora {
+  position: absolute;
+  font-size: 0.8rem;
+  right: 5px;
+  color: #4caf50;
+}
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.btnChat {
+  width: 150px;
+}
+
+.connect {
+  margin-bottom: 14px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #7e7979;
+}

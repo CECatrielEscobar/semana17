@@ -1,0 +1,35 @@
+<div class="contenedorAllProducts">
+  {{#each products}}
+    <div class="cardAllProducts">
+      <div class="containerImg">
+        <img src="/images/{{this.photo}}" class="imgAProducts" alt="" />
+      </div>
+      <div class="cardBody">
+        <div>
+          <h5>Titulo</h5>
+          <p>{{title}}</p>
+        </div>
+        <div>
+          <h5>Descripcion</h5>
+          <p>{{description}}</p>
+        </div>
+        <div>
+          <p>${{price}}</p>
+        </div>
+        <div>
+          <h5>Codigo</h5>
+          <p>{{code}}</p>
+        </div>
+        <div>
+          <h5>Stock:</h5>
+          <p>{{stock}}</p>
+        </div>
+        <div>
+          <h5>Categoria</h5>
+          <p>{{category}}</p>
+        </div>
+      </div>
+      <a href="/detalle/{{_id}}">Ver detalles</a>
+    </div>
+  {{/each}}
+</div>

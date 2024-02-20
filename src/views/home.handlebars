@@ -1,0 +1,15 @@
+<div>
+  {{#if validar}}
+    <h1>Listado de productos</h1>
+    <ul>
+      {{#each productos}}
+        <li>titulo: {{title}}</li>
+        <p>Precio: {{price}}</p>
+        <p>Stock: {{stock}}</p>
+      {{/each}}
+    </ul>
+
+  {{else}}
+    <h2>{{productos}}</h2>
+  {{/if}}
+</div>

@@ -1,0 +1,13 @@
+[
+  {
+    "title": "producto1",
+    "description": "martillo",
+    "price": 500,
+    "thumbnails": ["./img"],
+    "code": "bc5402",
+    "stock": 25,
+    "category": "hola",
+    "status": true,
+    "id": 1
+  }
+]

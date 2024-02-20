@@ -1,0 +1,19 @@
+<div class="chatContainer">
+  <button class="btn btn-primary btnChat" id="chatBtn">Ingresar al chat</button>
+  <div class="chat-window">
+    <div class="chat-messages" id="chat-messages">
+      <!-- Aquí se mostrarán los mensajes -->
+    </div>
+    <div class="chat-input">
+      <input
+        type="text"
+        id="message-input"
+        placeholder="Ingresa al Chat para poder escribir.."
+        readonly
+      />
+      <button id="send-button">Enviar</button>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>

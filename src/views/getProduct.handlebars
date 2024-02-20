@@ -1,0 +1,38 @@
+<div class="containerDetail">
+  {{#if product}}
+    <div class="cardAllProducts">
+      <div class="containerImg">
+        <img src="/images/{{product.photo}}" class="imgAProducts" alt="" />
+      </div>
+      <div class="cardBody">
+        <div>
+          <h5>Titulo</h5>
+          <p>{{product.title}}</p>
+        </div>
+        <div>
+          <h5>Descripcion</h5>
+          <p>{{product.description}}</p>
+        </div>
+        <div>
+          <p>${{product.price}}</p>
+        </div>
+        <div>
+          <h5>Codigo</h5>
+          <p>{{product.code}}</p>
+        </div>
+        <div>
+          <h5>Stock:</h5>
+          <p>{{product.stock}}</p>
+        </div>
+        <div>
+          <h5>Categoria</h5>
+          <p>{{product.category}}</p>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div>
+      <h2>No hay productos para mostrar..</h2>
+    </div>
+  {{/if}}
+</div>

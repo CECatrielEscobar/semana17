@@ -1,0 +1,93 @@
+<div class="bg-primary-subtle w-100 m-auto mb-5">
+  <form class="m-auto w-25 d-flex flex-column" id="formulario">
+    <h2>Agregar nuevos productos</h2>
+    <div class="mb-3">
+      <label for="title" class="form-label">Titulo</label>
+      <input
+        type="text"
+        placeholder="Ingresar el titulo"
+        class="form-control"
+        id="title"
+        name="title"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripcion</label>
+      <input
+        type="text"
+        placeholder="Ingresa una descripcion"
+        class="form-control"
+        id="description"
+        name="description"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Precio</label>
+      <input
+        type="number"
+        placeholder="Ingresa el precio"
+        class="form-control"
+        id="price"
+        name="price"
+      />
+
+    </div>
+    <div class="mb-3">
+      <label for="code" class="form-label">Codigo del producto</label>
+      <input
+        type="text"
+        placeholder="Ingresa el codigo"
+        class="form-control"
+        id="code"
+        name="code"
+      />
+
+    </div>
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input
+        type="number"
+        placeholder="Ingresa el stock"
+        class="form-control"
+        id="stock"
+        name="stock"
+      />
+
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Categoria</label>
+      <input
+        type="text"
+        placeholder="Ingresa la categoria"
+        class="form-control"
+        id="category"
+        name="category"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary px-4">Submit</button>
+
+  </form>
+</div>
+<section id="products">
+  <h1 id="mensaje"></h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Código</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Status</th>
+        <th scope="col">#ID</th>
+      </tr>
+    </thead>
+    <tbody id="listaProductos">
+      <!-- Aquí se agregarán dinámicamente las filas de la tabla -->
+    </tbody>
+  </table>
+</section>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/formScript.js"></script>
