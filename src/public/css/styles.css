@@ -275,7 +275,7 @@ label {
   flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en filas cuando no hay suficiente espacio */
   gap: 20px; /* Espacio entre las tarjetas */
   padding: 70px;
-  padding-top: 40px;
+
   min-height: 520px;
   justify-content: center;
 }
@@ -321,9 +321,18 @@ label {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.add-to-cart-btn:hover {
-  background-color: #0056b3;
+.delete-to-cart-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #be2b64;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.delete-to-cart-btn:hover {
+  background-color: #c43a6f;
 }
 
 .cart-container {

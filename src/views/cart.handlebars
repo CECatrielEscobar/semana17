@@ -11,9 +11,9 @@
           <p class="card-price">Cantidad: {{quantity}}</p>
         </div>
         <button
-          class="add-to-cart-btn"
+          class="delete-to-cart-btn"
           id="addCart"
-          data-product-id={{_id}}
+          data-product-id={{product._id}}
         >Eliminar producto</button>
       </div>
     {{/each}}
@@ -25,3 +25,5 @@
 <div class="cart-container">
   <a href="/product/products" class="view-cart-btn">Ver productos</a>
 </div>
+
+<script src="/js/cartDelete.js"></script>

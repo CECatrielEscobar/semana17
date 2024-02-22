@@ -140,8 +140,6 @@ routes.get("/products", async (req, res) => {
         nextLink: respuesta.nextLink,
       },
     };
-
-    console.log(objHandlebars);
     res.render("products", objHandlebars);
   } catch (error) {
     console.log(error);

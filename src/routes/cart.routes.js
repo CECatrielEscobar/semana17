@@ -15,7 +15,6 @@ routes.get("/home", async (req, res) => {
 routes.post("/", async (req, res) => {
   try {
     const respuesta = await cart.addCart();
-    console.log(typeof respuesta);
     res.send(respuesta);
   } catch (error) {
     console.log("cart add error api", error);
@@ -25,12 +24,10 @@ routes.post("/", async (req, res) => {
 // MUESTRA UN CARRITO POR ID Y SI NO ES INGRESADO MUESTRA TODOS
 routes.get("/getcart/:cid?", async (req, res) => {
   const id = req.params.cid;
-  console.log(id);
   try {
     if (!id || id.length < 24) {
       //devuelve TODOS LOS CARRITOS
       const response = await cart.getCarts();
-      console.log(response);
       if (response.length === 0) {
         return res.send({
           message: "No hay carritos registrados",
@@ -49,14 +46,9 @@ routes.get("/getcart/:cid?", async (req, res) => {
       });
     }
     res.render("cart", {
-      validar: response !== null,
+      validar: response !== null && response.products.length != 0,
       productos: response.products,
     });
-
-    // res.send({
-    //   message: "Carrito encontrado",
-    //   payload: response,
-    // });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -93,7 +85,7 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
         message: "Producto no encontrado, ingrese un Id valido",
       });
     }
-    console.log(carrito);
+    let indice;
     if (carrito.products.length === 0) {
       carrito.products.push({ product: pid, quantity: 1 });
 
@@ -102,7 +94,6 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
       console.log({
         seccion: "Cuando no hay productos registrados",
         message: "Carrito actualizado correctamente",
-        payload: result,
       });
       res.send({
         seccion: "Cuando no hay productos registrados",
@@ -110,11 +101,10 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
         payload: result,
       });
     } else {
-      const indice = carrito.products.findIndex((prod) => {
-        const id = prod.product.toString();
+      indice = carrito.products.findIndex((prod) => {
+        const id = prod.product._id.toString();
         return id === pid;
       });
-
       if (indice === -1) {
         console.log("estoy chequeando el if del newobj");
 
@@ -126,7 +116,6 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
         console.log({
           seccion: "Cuando ya hay productos agregados",
           message: "Carrito actualizado correctamente",
-          payload: result,
         });
         res.send({
           seccion: "Cuando ya hay productos agregados",
@@ -142,7 +131,6 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
         console.log({
           seccion: "Aumentando la cantidad del carrito",
           message: "Carrito actualizado correctamente",
-          payload: result,
         });
         res.send({
           seccion: "Aumentando la cantidad del carrito",
@@ -159,7 +147,6 @@ routes.post("/:cid?/products/:pid?", async (req, res) => {
 routes.put("/:cid", async (req, res) => {
   const cid = req.params.cid;
   const body = req.body.products;
-  console.log(body);
   if (!cid || cid.length < 24) {
     return res.status(404).send({
       message: "ID incorrecto o nulo.",
