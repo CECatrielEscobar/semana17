@@ -48,11 +48,15 @@ routes.get("/getcart/:cid?", async (req, res) => {
         message: "Carrito no encontrado!",
       });
     }
-
-    res.send({
-      message: "Carrito encontrado",
-      payload: response,
+    res.render("cart", {
+      validar: response !== null,
+      productos: response.products,
     });
+
+    // res.send({
+    //   message: "Carrito encontrado",
+    //   payload: response,
+    // });
   } catch (error) {
     console.log(error);
     res.status(500).send({

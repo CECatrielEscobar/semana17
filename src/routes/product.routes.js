@@ -8,18 +8,6 @@ const productD = new ProductDAO();
 
 const routes = express.Router();
 
-routes.get("/home", async (req, res) => {
-  try {
-    const productos = await product.getProducts();
-    res.render("home", {
-      bodyInfo: productos,
-      validar: Array.isArray(productos),
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 routes.get("/realtimeproducts", (req, res) => {
   res.render("realTimeProducts");
 });
@@ -72,9 +60,11 @@ routes.post("/addproducts", upload.single("photo"), async (req, res) => {
   }
 });
 
+// paginacion
 routes.get("/products", async (req, res) => {
-  let { limit = 10, page = 1, sort, filtro, filtroData } = req.query;
+  let { limit = 1, page = 1, sort, filtro, filtroData } = req.query;
   limit = parseInt(limit);
+  console.log(limit);
   page = parseInt(page);
   const categorias = [
     "tecnologia",
@@ -115,13 +105,14 @@ routes.get("/products", async (req, res) => {
         filtroData
       );
     }
+
     const respuesta = {
       status: products.docs.length === 0 ? "error" : "success",
       payload:
         products.docs.length !== 0
           ? products.docs
           : "No hay productos encontrados",
-      totalPage: products.totalPage,
+      totalPage: products.totalPages,
       prevPage: products.hasPrevPage
         ? products.prevPage
         : "No hay una pagina previa",
@@ -137,7 +128,21 @@ routes.get("/products", async (req, res) => {
         ? `http://localhost:8081/product/products?page=${products.nextPage}`
         : null,
     };
-    res.send(respuesta);
+
+    const objHandlebars = {
+      status: respuesta.status === "success" ? true : false,
+      productos: respuesta.payload,
+      page,
+      pageInfo: {
+        hasPrevPage: respuesta.hasPrevPage,
+        hasNextPage: respuesta.hasNextPage,
+        prevLink: respuesta.prevLink,
+        nextLink: respuesta.nextLink,
+      },
+    };
+
+    console.log(objHandlebars);
+    res.render("products", objHandlebars);
   } catch (error) {
     console.log(error);
   }

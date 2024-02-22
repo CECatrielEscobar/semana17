@@ -26,12 +26,14 @@ class ProductDAO {
         products = await ProductModel.paginate(filtros, {
           limit: isNaN(limit) ? 10 : limit,
           page: isNaN(page) ? 1 : page,
+          lean: true,
         });
       } else {
         products = await ProductModel.paginate(filtros, {
           limit: isNaN(limit) ? 10 : limit,
           page: isNaN(page) ? 1 : page,
           sort: { price: orden },
+          lean: true,
         });
       }
       return products;

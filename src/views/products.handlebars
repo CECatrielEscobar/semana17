@@ -1,0 +1,60 @@
+<div class="products-container">
+{{#if status}}
+    {{#each productos}}
+    <div class="card">
+    <img
+      src="/images/{{photo}}"
+      alt="Descripción de la imagen"
+    />
+    <div class="card-content">
+      <h2 class="card-title">{{title}}</h2>
+      <p class="card-description">{{description}}</p>
+      <p class="card-price">$ {{price}}</p>
+    </div>
+    <button class="add-to-cart-btn" id="addCart" data-product-id={{_id}}>Agregar al carrito</button>
+  </div>
+    {{/each}}
+  {{else}}
+  <div>
+        <h2>No hay productos para mostrar</h2>
+    </div>
+  {{/if}}
+  </div>
+<div class="cart-container">
+  <a href="/cart/getcart/65c96696e6a87686d85c1ede" class="view-cart-btn">Ver carrito</a> 
+</div>
+</div>
+<div class="contenedorProductosFooter">
+  <ul class="ulPaginate">
+    {{#if pageInfo.hasPrevPage}}
+      <li class="liContainer">
+        <h4><a
+            href="{{pageInfo.prevLink}}"
+            class="paginateLink txtPaginate"
+          >Pagina anterior</a></h4>
+      </li>
+    {{else}}
+      <li class="liContainer">
+        <h4 class="msgError txtPaginate">No hay pagina anterior</h4>
+      </li>
+    {{/if}}
+    <li class="liContainer">
+      <h4 class="txtPaginate">Pagina: {{page}}</h4>
+    </li>
+    {{#if pageInfo.hasNextPage}}
+      <li class="liContainer">
+        <h4 class="liContainer"><a
+            href="{{pageInfo.nextLink}}"
+            class="paginateLink txtPaginate"
+          >Pagina Siguiente</a></h4>
+      </li>
+    {{else}}
+      <li class="liContainer">
+        <h4 class="msgError txtPaginate">No hay página siguiente</h4>
+      </li>
+    {{/if}}
+
+  </ul>
+</div>
+
+<script src="/js/cartDos.js"></script>

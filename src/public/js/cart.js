@@ -1,5 +1,6 @@
 const btnCart = document.getElementById("btnCart");
 const respCart = document.getElementById("respCart");
+const addCart = document.getElementById("addCart");
 
 btnCart.addEventListener("click", () => {
   fetch("http://localhost:8081/cart/", {
