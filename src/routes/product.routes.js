@@ -65,7 +65,6 @@ routes.get("/products", async (req, res) => {
   if (req.session.email) {
     let { limit = 1, page = 1, sort, filtro, filtroData } = req.query;
     limit = parseInt(limit);
-    console.log(limit);
     page = parseInt(page);
     const categorias = [
       "tecnologia",
@@ -211,7 +210,6 @@ routes.delete("/product/:id", async (req, res) => {
   }
   try {
     const resp = await productD.deleteProduct(id);
-    console.log(resp);
     res.send({
       message: "Producto eliminado correctamente",
     });

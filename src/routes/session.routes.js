@@ -34,8 +34,6 @@ router.post("/login", async (req, res) => {
       req.session.first_name = response.first_name;
       req.session.last_name = response.last_name;
       req.session.email = response.email;
-      console.log(req.session);
-      console.log("logueado hacer redirect");
       res.send({
         status: true,
       });
@@ -47,7 +45,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/register", async (req, res) => {
   res.render("register");
-  console.log(req.session);
   if (req.session.email) {
     return res.redirect("/product/products");
   }
@@ -79,7 +76,6 @@ router.post("/register", async (req, res) => {
       res.send({ message: "email registrado" });
       return;
     } else {
-      console.log("registrado");
       return res.send({ message: "Cuenta creada" });
     }
   } catch (error) {
@@ -88,7 +84,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/session", (req, res) => {
-  console.log(req.session.email, "desde /session");
   if (req.session.email) {
     return res.send({
       message: true,

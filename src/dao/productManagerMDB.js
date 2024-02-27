@@ -20,7 +20,6 @@ class ProductDAO {
   }
   async getProducts(limit, page, orden, filtros, filtroData) {
     try {
-      console.log(filtros, "estoy en productDAO");
       let products;
       if (!orden) {
         products = await ProductModel.paginate(filtros, {
