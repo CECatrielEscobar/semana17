@@ -1,27 +1,90 @@
 body {
   background-color: #777;
+  box-sizing: border-box;
 }
 
 /* navbar */
+.contenedor-nav {
+  display: flex;
+  width: 100%;
+  background-color: #157a6e;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+}
 .navContainer {
-  background-color: #777;
-  height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  gap: 20px;
+}
+.container-btn-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  justify-content: center;
+  align-items: baseline;
+  height: 100%;
+}
+.nav-btn {
+  padding: 5px 10px;
+  text-decoration: none;
+  color: white;
+  border-radius: 5px;
 }
 
+.text-usuario-nav {
+  font-size: 1.1rem;
+  color: white;
+}
+.btn-logout {
+  color: white;
+  background-color: #0056b3;
+  text-align: center;
+  outline: none;
+  border: none;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+.btn-logout:hover {
+  background-color: #1867bb;
+}
+.register {
+  background-color: #1eb83f;
+}
+
+.login {
+  background-color: #007bff;
+}
+
+.register:hover {
+  background-color: #209639;
+}
+.login:hover {
+  background-color: #1867bb;
+}
 .link {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 .contenedorGral {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
+.contenedor-formulario {
+  display: flex;
+  background-color: rgb(120, 169, 233);
 
+  padding: 0;
+}
+.formulario-addproducts {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  padding-right: 50px;
+}
 .contForm {
   height: 100vh;
 }
@@ -265,10 +328,13 @@ label {
 }
 
 .contenedorProductosFooter {
-  top: 60px;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  /* background-color: rebeccapurple; */
+  justify-content: center;
+  margin-top: 50px;
+  /* position: fixed; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
 }
 .products-container {
   display: flex; /* Establece el contenedor como un contenedor flex */
@@ -353,4 +419,182 @@ label {
 
 .view-cart-btn:hover {
   background-color: #0056b3;
+}
+
+.register-message {
+  margin: auto;
+  width: 400px;
+  height: 150px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  gap: 15px;
+  background-color: rgb(247, 243, 243);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+.register-texto {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.registerOn {
+  color: #13c71965;
+}
+
+.emailOn {
+  color: #be2b63a8;
+}
+
+.btn-login {
+  text-decoration: none;
+  color: white;
+  background-color: #007bff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.register-message button {
+  width: 100px; /* display: block; */
+  padding: 4px 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #867feb;
+  border-radius: 4px;
+}
+
+#formulario {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+.label-register {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-register {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #a7a5a552;
+  transition: all 0.5s;
+}
+.input-register:focus {
+  background-color: transparent;
+}
+
+.btn-register {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-register:hover {
+  background-color: #45a049;
+}
+
+.formulario-register {
+  position: relative;
+  margin: auto;
+}
+
+.error-register-div {
+  background-color: rgba(0, 0, 0, 0.479);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+.error-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  width: 250px;
+  margin: auto;
+  height: 150px;
+  background-color: rgb(247, 243, 243);
+  border: 1px solid #272525;
+}
+.error-register h2 {
+  font-size: 1rem;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.fieldReq {
+  color: rgba(243, 7, 7, 0.733);
+}
+
+.logueo-fail {
+  width: 100%;
+  color: #d11111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container-form-login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.logueo-fail h2 {
+  background-color: #be2b6348;
+  display: inline-block;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 5px;
+  border: 1px solid rgb(238, 35, 35);
+  font-size: 1rem;
+}
+
+.logueo-exitoso {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid rgb(12, 255, 3);
+  background-color: #3de26173;
+  width: 300px;
+  height: 150px;
+  /* background-color: green; */
+  text-align: center;
+}
+
+.logueo-exitoso h2 {
+  color: white;
+  -webkit-text-stroke: 1px black;
+}
+
+.logueo-exitoso a {
+  text-decoration: none;
+  border: 1px solid black;
+  background-color: #209639;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
+}
+
+.logueo-exitoso a:hover {
+  background-color: #136625;
 }

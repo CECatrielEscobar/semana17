@@ -1,10 +1,14 @@
 import express from "express";
 import handlebars from "express-handlebars";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import __dirname from "./utils.js";
 import myModule from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
+import userRoutes from "./routes/session.routes.js";
+import { loginCheck } from "./middleware/loginCheck.js";
 
 mongoose
   .connect(
@@ -31,9 +35,21 @@ app.get("/", (req, res) => {
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://madk3:asda1125@ecommerce.n8lqyzv.mongodb.net/?retryWrites=true&w=majority",
+    }),
+    secret: "asdajk12ksa",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-app.use("/product", myModule.routes);
-app.use("/cart", cartRoutes);
+app.use("/product", loginCheck, myModule.routes);
+app.use("/cart", loginCheck, cartRoutes);
+app.use("/session", userRoutes);
 
 const io = new Server(serverHTTP);
 

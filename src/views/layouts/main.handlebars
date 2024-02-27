@@ -12,12 +12,12 @@
     <title>{{title}}</title>
   </head>
   <body>
-    <nav>
-      <div class="navContainer">
-        <a href="/product/products" class="link">Home</a>
-        <a href="/product/addproductsform" class="link">Agregar Producto</a>
-        <a href="/cart/home" class="link">Agregar Carrito</a>
-        <a href="/chat" class="link">Sala de chat</a>
+    <nav class="contenedor-nav">
+      <div class="navContainer" id="navContainer">
+        <img src="/images/nodejs-icon.svg" alt="" />
+      </div>
+      <div id="container-btn-nav" class="container-btn-nav">
+
       </div>
     </nav>
     {{{body}}}
@@ -27,5 +27,6 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="/js/nav.js"></script>
   </body>
 </html>

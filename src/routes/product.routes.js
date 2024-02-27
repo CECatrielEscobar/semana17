@@ -1,7 +1,7 @@
-import ProductManager from "../dao/productManager.js";
+import ProductManager from "../DAO/productManager.js";
 const product = new ProductManager("/models/");
 import upload from "../multer.js";
-import ProductDAO from "../dao/productManagerMDB.js";
+import ProductDAO from "../DAO/productManagerMDB.js";
 import express from "express";
 
 const productD = new ProductDAO();
@@ -62,87 +62,91 @@ routes.post("/addproducts", upload.single("photo"), async (req, res) => {
 
 // paginacion
 routes.get("/products", async (req, res) => {
-  let { limit = 1, page = 1, sort, filtro, filtroData } = req.query;
-  limit = parseInt(limit);
-  console.log(limit);
-  page = parseInt(page);
-  const categorias = [
-    "tecnologia",
-    "indumentaria",
-    "muebles",
-    "comida",
-    "juegos",
-  ];
-  const filtroAceptado = ["category", "stock"];
-  let filtros = {};
-  if (!filtro || !filtroAceptado.includes(filtro)) {
-    filtros = {};
-  } else if (filtro === "stock") {
-    filtros[filtro] = { $gt: 0 };
-  } else if (categorias.includes(filtroData)) {
-    filtros[filtro] = filtroData;
-  } else {
-    filtros = {};
-  }
-  try {
-    let orden;
-    let products;
-    if (!sort || (sort !== "asc" && sort !== "des")) {
-      products = await productD.getProducts(
-        limit,
-        page,
-        orden,
-        filtros,
-        filtroData
-      );
+  if (req.session.email) {
+    let { limit = 1, page = 1, sort, filtro, filtroData } = req.query;
+    limit = parseInt(limit);
+    console.log(limit);
+    page = parseInt(page);
+    const categorias = [
+      "tecnologia",
+      "indumentaria",
+      "muebles",
+      "comida",
+      "juegos",
+    ];
+    const filtroAceptado = ["category", "stock"];
+    let filtros = {};
+    if (!filtro || !filtroAceptado.includes(filtro)) {
+      filtros = {};
+    } else if (filtro === "stock") {
+      filtros[filtro] = { $gt: 0 };
+    } else if (categorias.includes(filtroData)) {
+      filtros[filtro] = filtroData;
     } else {
-      orden = sort === "asc" ? 1 : -1;
-      products = await productD.getProducts(
-        limit,
-        page,
-        orden,
-        filtros,
-        filtroData
-      );
+      filtros = {};
     }
+    try {
+      let orden;
+      let products;
+      if (!sort || (sort !== "asc" && sort !== "des")) {
+        products = await productD.getProducts(
+          limit,
+          page,
+          orden,
+          filtros,
+          filtroData
+        );
+      } else {
+        orden = sort === "asc" ? 1 : -1;
+        products = await productD.getProducts(
+          limit,
+          page,
+          orden,
+          filtros,
+          filtroData
+        );
+      }
 
-    const respuesta = {
-      status: products.docs.length === 0 ? "error" : "success",
-      payload:
-        products.docs.length !== 0
-          ? products.docs
-          : "No hay productos encontrados",
-      totalPage: products.totalPages,
-      prevPage: products.hasPrevPage
-        ? products.prevPage
-        : "No hay una pagina previa",
-      nextPage: products.hasNextPage
-        ? products.nextPage
-        : "No hay una pagina siguiente",
-      hasPrevPage: products.hasPrevPage,
-      hasNextPage: products.hasNextPage,
-      prevLink: products.hasPrevPage
-        ? `http://localhost:8081/product/products?page=${products.prevPage}`
-        : null,
-      nextLink: products.hasNextPage
-        ? `http://localhost:8081/product/products?page=${products.nextPage}`
-        : null,
-    };
+      const respuesta = {
+        status: products.docs.length === 0 ? "error" : "success",
+        payload:
+          products.docs.length !== 0
+            ? products.docs
+            : "No hay productos encontrados",
+        totalPage: products.totalPages,
+        prevPage: products.hasPrevPage
+          ? products.prevPage
+          : "No hay una pagina previa",
+        nextPage: products.hasNextPage
+          ? products.nextPage
+          : "No hay una pagina siguiente",
+        hasPrevPage: products.hasPrevPage,
+        hasNextPage: products.hasNextPage,
+        prevLink: products.hasPrevPage
+          ? `http://localhost:8081/product/products?page=${products.prevPage}`
+          : null,
+        nextLink: products.hasNextPage
+          ? `http://localhost:8081/product/products?page=${products.nextPage}`
+          : null,
+      };
 
-    const objHandlebars = {
-      status: respuesta.status === "success" ? true : false,
-      productos: respuesta.payload,
-      page,
-      pageInfo: {
-        hasPrevPage: respuesta.hasPrevPage,
-        hasNextPage: respuesta.hasNextPage,
-        prevLink: respuesta.prevLink,
-        nextLink: respuesta.nextLink,
-      },
-    };
-    res.render("products", objHandlebars);
-  } catch (error) {
-    console.log(error);
+      const objHandlebars = {
+        status: respuesta.status === "success" ? true : false,
+        productos: respuesta.payload,
+        page,
+        pageInfo: {
+          hasPrevPage: respuesta.hasPrevPage,
+          hasNextPage: respuesta.hasNextPage,
+          prevLink: respuesta.prevLink,
+          nextLink: respuesta.nextLink,
+        },
+      };
+      res.render("products", objHandlebars);
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    res.redirect("/session/login");
   }
 });
 

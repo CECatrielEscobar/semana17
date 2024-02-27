@@ -1,7 +1,7 @@
 import express from "express";
 const routes = express.Router();
-import CartDAO from "../dao/cartManagerMDB.js";
-import ProductDAO from "../dao/productManagerMDB.js";
+import CartDAO from "../DAO/cartManagerMDB.js";
+import ProductDAO from "../DAO/productManagerMDB.js";
 
 const cart = new CartDAO();
 const prod = new ProductDAO();
