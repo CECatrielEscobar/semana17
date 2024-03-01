@@ -3,12 +3,18 @@ import handlebars from "express-handlebars";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import __dirname from "./utils.js";
+
+// routes
 import myModule from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
+import userRoutes from "./routes/session.routes.js";
+import githubRoutes from "./routes/github.routes.js";
+//
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import userRoutes from "./routes/session.routes.js";
 import { loginCheck } from "./middleware/loginCheck.js";
+import initializePassport from "./config/passport.config.js";
+import passport from "passport";
 
 mongoose
   .connect(
@@ -46,10 +52,14 @@ app.use(
     saveUninitialized: false,
   })
 );
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/product", loginCheck, myModule.routes);
 app.use("/cart", loginCheck, cartRoutes);
 app.use("/session", userRoutes);
+app.use("/", githubRoutes);
 
 const io = new Server(serverHTTP);
 

@@ -10,7 +10,6 @@ const registerSchema = new mongoose.Schema({
   last_name: {
     type: String,
     required: true,
-    minLength: 3,
     maxLength: 20,
   },
   email: {
@@ -24,13 +23,12 @@ const registerSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minLength: 4,
-    maxLength: 20,
+    maxLength: 100,
   },
   rol: {
     type: String,
     enum: ["admin", "usuario"],
-    required: true,
+    default: "usuario",
   },
 });
 

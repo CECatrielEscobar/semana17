@@ -45,6 +45,7 @@ body {
   text-align: center;
   outline: none;
   border: none;
+  border-radius: 5px;
   padding: 5px 10px;
   box-sizing: border-box;
 }
@@ -499,6 +500,18 @@ label {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.btn-github {
+  background-color: #5f5f5f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-github:hover {
+  background-color: #757474;
 }
 
 .btn-register:hover {
