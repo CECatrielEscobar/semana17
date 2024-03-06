@@ -17,7 +17,7 @@ const initializePassport = () => {
           let user = await UserModel.findOne({ email: username });
           if (user) {
             console.log("User already exists");
-            return done(full, false);
+            return done(null, false);
           }
           const pwNoHash = password;
           const newUser = {
@@ -33,7 +33,7 @@ const initializePassport = () => {
           ) {
             newUser.rol = "admin";
           }
-          console.log(newUser);
+          console.log(newUser, " dsp hash");
           let result = await UserModel.create(newUser);
           return done(null, result);
         } catch (error) {
@@ -50,6 +50,8 @@ const initializePassport = () => {
       async (username, password, done) => {
         try {
           const user = await UserModel.findOne({ email: username });
+          const pwHash = validatePassword(password, user.password);
+          console.log(pwHash);
           if (!user) {
             console.log("user doesn't exist");
             return done(null, false, { message: "!Email no registrado!" });

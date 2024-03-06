@@ -4,6 +4,7 @@ import UserDAO from "../DAO/userDAO.js";
 import { createHashed } from "../utils.js";
 import { compareSync } from "bcrypt";
 import passport from "passport";
+import UserModel from "../schemas/registerSchema.js";
 const userDAO = new UserDAO();
 
 router.get("/login", (req, res) => {
@@ -18,10 +19,8 @@ router.post(
   passport.authenticate("login", { failureRedirect: "/login" }),
   async (req, res) => {
     const { email, password } = req.body;
-
     try {
       const response = await userDAO.loginUser(email, password);
-      console.log(response);
       console.log("estoy en login", compareSync(password, response.password));
       if (!response) {
         res.status(401).send({
@@ -47,50 +46,23 @@ router.post(
   }
 );
 
-router.get(
-  "/register",
-
-  async (req, res) => {
-    res.render("register");
+router.get("/register", async (req, res) => {
+  if (req.session.email) {
+    res.redirect("/product/products");
   }
-);
+  res.render("register");
+});
 
 router.post(
   "/register",
-  passport.authenticate("register", { failureRedirect: "/login" }),
+  passport.authenticate("register"),
   async (req, res) => {
-    const data = req.body;
+    console.log(req.user, " USUARIO REGISTER");
 
-    if (
-      !data.first_name ||
-      !data.last_name ||
-      !data.email ||
-      !data.age ||
-      !data.password
-    ) {
-      return res.status(404).send({
-        message: "Todos los campos son requeridos",
-      });
-    }
-    if (
-      data.email == "adminCoder@coder.com" &&
-      data.password == "adminCod3r123"
-    ) {
-      data.rol = "admin";
-    }
-    data.rol = "usuario";
-    data.password = createHashed(data.password);
-    console.log(data.password);
-    try {
-      const response = await userDAO.registerUser(data);
-      if (!response) {
-        res.send({ message: "email registrado" });
-        return;
-      } else {
-        return res.send({ message: "Cuenta creada" });
-      }
-    } catch (error) {
-      console.log(error);
+    if (req.user.email) {
+      return res.send({ message: "Cuenta creada" });
+    } else if (req.user.userFind) {
+      return res.send({ message: "email registrado" });
     }
   }
 );

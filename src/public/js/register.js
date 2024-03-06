@@ -4,8 +4,11 @@ const lastName = document.getElementById("last_name");
 const email = document.getElementById("email");
 const age = document.getElementById("age");
 const password = document.getElementById("password");
-
+console.log("registro");
 const addDiv = (txt, clase) => {
+  if (document.querySelector(".register-message")) {
+    formulario.removeChild(formulario.firstChild);
+  }
   const divRegister = document.createElement("div");
   divRegister.classList.add("register-message");
   const texto = document.createElement("h2");
@@ -38,23 +41,34 @@ formulario.addEventListener("submit", async (e) => {
     age: age.value,
     password: password.value,
   };
-  console.log(data);
-  //   fetch("http://localhost:3000/api/register", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         return res.json();
-  //       } else {
-  //         throw new Error("Error en la solicitud");
-  //       }
-  //     })
-  //     .then((data) => console.log(data))
-  //     .catch((error) => console.log(error));
+  if (
+    !data.email ||
+    !data.first_name ||
+    !data.last_name ||
+    !data.age ||
+    !data.password
+  ) {
+    const containerError = document.createElement("div");
+    containerError.classList.add("error-register-div");
+    const divError = document.createElement("div");
+    divError.classList.add("error-register");
+    const message = document.createElement("h2");
+    message.textContent = "TODOS LOS CAMPOS SON REQUERIDOS!";
+    const btnError = document.createElement("button");
+    btnError.textContent = "Cerrar ❌";
+    btnError.addEventListener("click", () => {
+      containerForm.removeChild(containerError);
+    });
+    divError.appendChild(message);
+    divError.appendChild(btnError);
+    containerError.appendChild(divError);
+    console.log(containerError);
+    const containerForm = document.getElementById("formulario-register");
+    containerForm.innerHTML = "";
+    containerForm.appendChild(containerError);
+    containerForm.appendChild(formulario);
+    return;
+  }
   try {
     const respuesta = await fetch("http://localhost:8081/session/register", {
       method: "POST",
@@ -66,28 +80,8 @@ formulario.addEventListener("submit", async (e) => {
     const dataJson = await respuesta.json();
     console.log(dataJson);
     if (dataJson.message == "email registrado") {
+      console.log("me dio email registrado");
       addDiv("Este email se encuentra en uso!", "emailOn");
-    } else if (dataJson.message === "Todos los campos son requeridos") {
-      // alert("Todos los campos son requeridos para el registro");
-      const containerError = document.createElement("div");
-      containerError.classList.add("error-register-div");
-      const divError = document.createElement("div");
-      divError.classList.add("error-register");
-      const message = document.createElement("h2");
-      message.textContent = dataJson.message;
-      const btnError = document.createElement("button");
-      btnError.textContent = "Cerrar ❌";
-      btnError.addEventListener("click", () => {
-        containerForm.removeChild(containerError);
-      });
-      divError.appendChild(message);
-      divError.appendChild(btnError);
-      containerError.appendChild(divError);
-      console.log(containerError);
-      const containerForm = document.getElementById("formulario-register");
-      containerForm.innerHTML = "";
-      containerForm.appendChild(containerError);
-      containerForm.appendChild(formulario);
     } else {
       addDiv("Registro exitoso!", "registerOn");
     }

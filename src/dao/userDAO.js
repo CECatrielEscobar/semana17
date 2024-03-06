@@ -1,6 +1,18 @@
 import UserModel from "../schemas/registerSchema.js";
 
 class UserDAO {
+  async findByEmail(email) {
+    try {
+      const res = await UserModel.findOne({ email });
+      if (res) {
+        return res;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async registerUser(data) {
     // const data = UserModel.findOne({ email: email }, { email: 1 })
     try {
@@ -8,6 +20,7 @@ class UserDAO {
         { email: data.email },
         { email: 1 }
       ).lean();
+      console.log("validatee", validate);
       if (validate) {
         return null;
       } else {

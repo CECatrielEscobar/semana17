@@ -21,7 +21,7 @@ formulario.addEventListener("submit", async (e) => {
     const divExito = document.createElement("div");
     divExito.classList.add("logueo-exitoso");
     const text = document.createElement("h2");
-    text.textContent = "!Registro exitoso!";
+    text.textContent = "!Logueo exitoso!";
     const btn = document.createElement("a");
     btn.href = "http://localhost:8081/product/products";
     btn.textContent = "Ir a home";
