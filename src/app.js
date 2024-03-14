@@ -15,6 +15,7 @@ import mongoose from "mongoose";
 import { loginCheck } from "./middleware/loginCheck.js";
 import initializePassport from "./config/passport.config.js";
 import passport from "passport";
+import cookieParser from "cookie-parser";
 
 mongoose
   .connect(
@@ -38,6 +39,8 @@ app.get("/chat", (req, res) => {
 app.get("/", (req, res) => {
   res.render("inicio");
 });
+
+app.use(cookieParser("secret_cookie"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -52,6 +55,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());

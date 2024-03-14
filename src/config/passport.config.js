@@ -1,8 +1,9 @@
 import passport from "passport";
 import local from "passport-local";
 import UserModel from "../schemas/registerSchema.js";
-import { createHashed, validatePassword } from "../utils.js";
+import { createAccessToken, createHashed, validatePassword } from "../utils.js";
 import { Strategy as GitHubStrategy } from "passport-github2";
+import { Strategy } from "passport-jwt";
 
 const LocalStrategy = local.Strategy;
 
@@ -17,7 +18,7 @@ const initializePassport = () => {
           let user = await UserModel.findOne({ email: username });
           if (user) {
             console.log("User already exists");
-            return done(null, false);
+            return done(null, false, { message: "email registrado" });
           }
           const pwNoHash = password;
           const newUser = {
@@ -33,9 +34,20 @@ const initializePassport = () => {
           ) {
             newUser.rol = "admin";
           }
-          console.log(newUser, " dsp hash");
           let result = await UserModel.create(newUser);
-          return done(null, result);
+          if (result) {
+            const user = {
+              first_name: result.first_name,
+              last_name: result.last_name,
+              email: result.email,
+            };
+            // console.log(user);
+            // const token = await createAccessToken(user);
+            // res.clearCookie("token");
+            // res.cookie("token", token, { signed: true });
+
+            return done(null, result);
+          }
         } catch (error) {
           return done("Error al obtener al usuario" + error);
         }
@@ -50,8 +62,6 @@ const initializePassport = () => {
       async (username, password, done) => {
         try {
           const user = await UserModel.findOne({ email: username });
-          const pwHash = validatePassword(password, user.password);
-          console.log(pwHash);
           if (!user) {
             console.log("user doesn't exist");
             return done(null, false, { message: "!Email no registrado!" });
@@ -61,6 +71,45 @@ const initializePassport = () => {
           return done(null, user);
         } catch (error) {
           return done(error);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    "jwt",
+    new Strategy(
+      {
+        // jwtFromRequest: función que recibe el objeto request y como resultado
+        // debe devolver el token a passport. Esto passport-jwt lo pide ya que solo
+        // el desarrollador es quien sabe como se manda el jwt (puede enviarse, en las
+        // cookies, distintas cabeceras, en el body, como un url param, etc.)
+        jwtFromRequest: (req) => {
+          var token = null;
+          if (req && req.signedCookies) {
+            token = req.signedCookies["jwt"];
+          }
+          return token;
+        },
+
+        // secretOrKey: Nos lo pide pada poder verificar la firma del JWT (claramente
+        // tiene que tener el mismo valor que el secret que usamos para firmar el JWT
+        // en la libreria jsonwebtoken)
+        secretOrKey: "secret_jwt",
+      },
+      async function (jwt_payload, done) {
+        // jwt_payload representa el objeto json que guardamos dentro del JWT
+        let userId = jwt_payload.id;
+        let user = await UserModel.findById(userId);
+
+        // La funcion done(error, valor) sirve para indicar la salida de passport en donde
+        // error puede contener un objeto representando un error o ser null en caso que no haya,
+        // y valor es lo que vamos a poder acceder en nuestras funciones de rutas como req.user.
+        // En caso de que las crendeciales no sean válidas se debe devolver un done(null, false)
+        if (user) {
+          return done(null, user);
+        } else {
+          return done(null, false);
         }
       }
     )

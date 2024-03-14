@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const registerSchema = new mongoose.Schema({
   first_name: {
@@ -24,6 +24,17 @@ const registerSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxLength: 100,
+  },
+  carts: {
+    type: [
+      {
+        cart: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "carts",
+        },
+      },
+    ],
+    default: [],
   },
   rol: {
     type: String,
