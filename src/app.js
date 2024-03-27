@@ -5,7 +5,7 @@ import MongoStore from "connect-mongo";
 import __dirname from "./utils.js";
 
 // routes
-import myModule from "./routes/product.routes.js";
+import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import userRoutes from "./routes/session.routes.js";
 import githubRoutes from "./routes/github.routes.js";
@@ -16,17 +16,18 @@ import { loginCheck } from "./middleware/loginCheck.js";
 import initializePassport from "./config/passport.config.js";
 import passport from "passport";
 import cookieParser from "cookie-parser";
+//variables de entorno
+
+import config from "../config.js";
 
 mongoose
-  .connect(
-    "mongodb+srv://madk3:asda1125@ecommerce.n8lqyzv.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(config.mongoUrl)
   .then((res) => console.log("Conectado correctamente a MongoDB Atlas"))
   .catch((error) => console.log("ocurrio un error", error));
 
 const app = express();
-const serverHTTP = app.listen(8081, () => {
-  console.log("en el puerto 8081");
+const serverHTTP = app.listen(config.port, () => {
+  console.log(`en el puerto ${config.port}`);
 });
 
 app.engine("handlebars", handlebars.engine());
@@ -40,17 +41,16 @@ app.get("/", (req, res) => {
   res.render("inicio");
 });
 
-app.use(cookieParser("secret_cookie"));
+app.use(cookieParser(config.secretCookie));
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://madk3:asda1125@ecommerce.n8lqyzv.mongodb.net/?retryWrites=true&w=majority",
+      mongoUrl: config.mongoUrl,
     }),
-    secret: "asdajk12ksa",
+    secret: config.secretSession,
     resave: false,
     saveUninitialized: false,
   })
@@ -60,7 +60,7 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/product", loginCheck, myModule.routes);
+app.use("/product", loginCheck, productRoutes);
 app.use("/cart", loginCheck, cartRoutes);
 app.use("/session", userRoutes);
 app.use("/", githubRoutes);

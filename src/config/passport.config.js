@@ -4,6 +4,7 @@ import UserModel from "../schemas/registerSchema.js";
 import { createAccessToken, createHashed, validatePassword } from "../utils.js";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { Strategy } from "passport-jwt";
+import config from "../../config.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -95,7 +96,7 @@ const initializePassport = () => {
         // secretOrKey: Nos lo pide pada poder verificar la firma del JWT (claramente
         // tiene que tener el mismo valor que el secret que usamos para firmar el JWT
         // en la libreria jsonwebtoken)
-        secretOrKey: "secret_jwt",
+        secretOrKey: config.secretJWT,
       },
       async function (jwt_payload, done) {
         // jwt_payload representa el objeto json que guardamos dentro del JWT

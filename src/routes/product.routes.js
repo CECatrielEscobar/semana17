@@ -1,5 +1,3 @@
-import ProductManager from "../DAO/productManager.js";
-const product = new ProductManager("/models/");
 import upload from "../multer.js";
 import ProductDAO from "../DAO/productManagerMDB.js";
 import express from "express";
@@ -220,4 +218,4 @@ routes.delete("/product/:id", async (req, res) => {
     });
   }
 });
-export default { routes, product };
+export default routes;
